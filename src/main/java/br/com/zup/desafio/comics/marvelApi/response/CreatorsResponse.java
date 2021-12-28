@@ -1,13 +1,10 @@
 package br.com.zup.desafio.comics.marvelApi.response;
 
-import java.io.Serializable;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class CreatorsResponse implements Serializable{
-	
-	private static final long serialVersionUID = 1L;
+public class CreatorsResponse {;
 	
 	private List<CreatoresItems> items;
 	

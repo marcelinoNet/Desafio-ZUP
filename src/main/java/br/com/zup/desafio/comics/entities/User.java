@@ -80,9 +80,7 @@ public class User implements Serializable{
 
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/yyyy")
 	public LocalDate getBirthday(){
-		
 		return birthday;
-		
 	}
 
 	public void setBirthday(LocalDate birthday) {

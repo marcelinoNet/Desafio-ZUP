@@ -29,15 +29,10 @@ public class ComicsService {
 	
 	
 	@Transactional(readOnly = true)
-	public List<ComicDTO> findAll() {
-		List<Comic> list = comicRepository.findAll();
-		return list.stream().map((x) -> new ComicDTO(x)).collect(Collectors.toList());
-	}
-
-	@Transactional(readOnly = true)
 	public List<ComicDTO> findByUser(Long userId) {
 		Optional<User> obj = userRepository.findById(userId);
-		User user = obj.orElseThrow(()-> new ResourceNotFoundException("Usuário não encontrado: {id = "+ userId+"}"));
+		User user = obj.orElseThrow(()-> new 
+				ResourceNotFoundException("Usuário não encontrado: {id = "+ userId+"}"));
 		List<Comic> list = comicRepository.findComicsByUser(user);
 		return list.stream().map(x -> new ComicDTO(x)).collect(Collectors.toList());
 	}
@@ -46,7 +41,8 @@ public class ComicsService {
 		Comic entity = new Comic();
 		
 		Optional<User> obj = userRepository.findById(userId);
-		User user = obj.orElseThrow(()-> new ResourceNotFoundException("Usuário não encontrado: {id = "+ userId+"}"));
+		User user = obj.orElseThrow(()-> 
+			new ResourceNotFoundException("Usuário não encontrado: {id = "+ userId+"}"));
 		entity = convertResponseToEntity(user, response);
 		for(CreatoresItems item: response.getCreators().getItems()) {
 			entity.getAuthors().add(new Author(item.getName()));
@@ -54,6 +50,14 @@ public class ComicsService {
 		entity =  comicRepository.save(entity);
 		return new ComicDTO(entity);
 	}
+	
+	
+	@Transactional(readOnly = true)
+	public List<ComicDTO> findAll() {
+		List<Comic> list = comicRepository.findAll();
+		return list.stream().map((x) -> new ComicDTO(x)).collect(Collectors.toList());
+	}
+
 
 	private Comic convertResponseToEntity(User user,ResultsResponse response) {
 		

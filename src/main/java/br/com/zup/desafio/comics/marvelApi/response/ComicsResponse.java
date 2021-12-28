@@ -14,8 +14,4 @@ public class ComicsResponse {
 	public ResultsResponse getResult() {
 		return data.getResult();
 	}
-	
-	
-	
-	
 }

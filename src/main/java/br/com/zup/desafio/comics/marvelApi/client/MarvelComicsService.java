@@ -27,16 +27,14 @@ public class MarvelComicsService {
 	
 	public ResultsResponse findComicsById(Integer id) {
 		Long currentDate = new Date().getTime();
-		ComicsResponse response = marvelClient.findComicsById(id, currentDate,publicKey , hash(currentDate)).getBody();
+		ComicsResponse response = 
+				marvelClient.findComicsById(
+						id, 
+						currentDate,publicKey , 
+						hash(currentDate)).getBody();
 		return response.getResult();
 	}
 	
-	public ComicsResponse findAll() {
-		Long currentDate = new Date().getTime();
-		return marvelClient.findAll(currentDate, publicKey, hash(currentDate));
-		
-	}
-
 	private String hash(Long currentDate) {
 		try {
             MessageDigest md = MessageDigest.getInstance("MD5");
@@ -46,6 +44,12 @@ public class MarvelComicsService {
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException();
         }
+	}
+
+	public ComicsResponse findAll() {
+		Long currentDate = new Date().getTime();
+		return marvelClient.findAll(currentDate, publicKey, hash(currentDate));
+		
 	}
 
 	

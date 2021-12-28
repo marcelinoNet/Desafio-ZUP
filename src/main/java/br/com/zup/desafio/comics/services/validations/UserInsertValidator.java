@@ -21,10 +21,9 @@ public class UserInsertValidator implements ConstraintValidator<UserInsertValid,
 	@Override
 	public void initialize(UserInsertValid ann) {
 	}
-
+	
 	@Override
 	public boolean isValid(UserDTO dto, ConstraintValidatorContext context) {
-		
 		
 		List<FieldMessage> list = new ArrayList<>();
 				
@@ -39,7 +38,8 @@ public class UserInsertValidator implements ConstraintValidator<UserInsertValid,
 		
 		for (FieldMessage e : list) {
 			context.disableDefaultConstraintViolation();
-			context.buildConstraintViolationWithTemplate(e.getMessage()).addPropertyNode(e.getFieldName())
+			context.buildConstraintViolationWithTemplate(
+									e.getMessage()).addPropertyNode(e.getFieldName())
 					.addConstraintViolation();
 		}
 		return list.isEmpty();

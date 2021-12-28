@@ -30,19 +30,18 @@ public class ResourceExceptionHandler {
 	}
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<ValidationError> Validation(MethodArgumentNotValidException e, HttpServletRequest request){
+	public ResponseEntity<ValidationError> Validation(MethodArgumentNotValidException e, 
+				HttpServletRequest request){
 		HttpStatus status = HttpStatus.BAD_REQUEST;
 		ValidationError err = new ValidationError();
 		err.setTimestamp(Instant.now());
 		err.setStatus(status.value());
-		err.setError("Excessão na base de dados");
+		err.setError("Exceção na base de dados");
 		err.setMessage(e.getMessage());
 		err.setPath(request.getRequestURI());
-				
 		for(FieldError f: e.getBindingResult().getFieldErrors()) {
 			err.addError(f.getField(), f.getDefaultMessage());
 		}
-		
 		return ResponseEntity.status(status).body(err);
 	}
 	

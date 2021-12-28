@@ -19,8 +19,11 @@ public interface MarvelComicsClient {
 			@RequestParam(value="hash") String hash
 			);
 	
+	
+	
 	@GetMapping
-	public ComicsResponse findAll(@RequestParam(value = "ts") Long ts,
+	public ComicsResponse findAll(
+			@RequestParam(value = "ts") Long ts,
 			@RequestParam(value = "apikey") String apikey,
 			@RequestParam(value= "hash") String hash);
 	

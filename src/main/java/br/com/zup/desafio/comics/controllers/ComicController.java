@@ -1,5 +1,6 @@
 package br.com.zup.desafio.comics.controllers;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.zup.desafio.comics.dtos.ComicDTO;
 import br.com.zup.desafio.comics.marvelApi.client.MarvelComicsService;
@@ -24,12 +26,6 @@ public class ComicController {
 	
 	@Autowired
 	private MarvelComicsService marvelService;
-
-	@GetMapping
-	public ResponseEntity<List<ComicDTO>> findAll(){
-		List<ComicDTO> list = comicService.findAll();
-		return ResponseEntity.ok().body(list);
-	}
 	
 	@GetMapping(value = "/user/{id}")
 	public ResponseEntity<List<ComicDTO>> findByUser(@PathVariable Long id){
@@ -38,10 +34,20 @@ public class ComicController {
 	}
 	
 	@PostMapping(value="/{id}/{userId}")
-	public ResponseEntity<ComicDTO> insertComicWithUser(@PathVariable Integer id, @PathVariable Long userId) {
+	public ResponseEntity<ComicDTO> insertComicWithUser(@PathVariable Integer id,
+			@PathVariable Long userId) {
 		ResultsResponse response = marvelService.findComicsById(id);
 		ComicDTO dto = comicService.insertComic(userId,response);
-		return ResponseEntity.ok().body(dto);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(dto.getId()).toUri();
+		return ResponseEntity.created(uri).body(dto);
+	}
+	
+	
+	@GetMapping
+	public ResponseEntity<List<ComicDTO>> findAll(){
+		List<ComicDTO> list = comicService.findAll();
+		return ResponseEntity.ok().body(list);
 	}
 	
 }

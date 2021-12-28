@@ -20,6 +20,7 @@ public class ResultsResponse {
 	private CreatorsResponse creators;
 	
 	
+	
 	public ResultsResponse(Integer comicId, String title, String isbn, 
 			String description, List<PriceResponse> prices, 
 			CreatorsResponse creators) {

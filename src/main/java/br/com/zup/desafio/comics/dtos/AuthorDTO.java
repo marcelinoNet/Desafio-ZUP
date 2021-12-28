@@ -2,12 +2,16 @@ package br.com.zup.desafio.comics.dtos;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotBlank;
+
 import br.com.zup.desafio.comics.entities.Author;
 
 public class AuthorDTO implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private Long id;
+	
+	@NotBlank(message = "O Nome do autor é obrigatório")
 	private String name;
 	
 	public AuthorDTO() {}
